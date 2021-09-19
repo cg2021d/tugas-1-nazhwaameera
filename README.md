@@ -1,4 +1,4 @@
-Nama        : Nazhwa Ameera H.
+Nama        : Nazhwa Ameera H. <br />
 NRP         : 05111940000133
 Nama barang : Nasi
 
