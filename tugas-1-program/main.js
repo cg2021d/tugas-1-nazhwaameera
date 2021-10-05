@@ -849,7 +849,7 @@ function main() {
             speed = speed * -1;
         }
 
-        for (let i = 1340; i < vertices.length; i += 5) {
+        for (let i = 1; i < vertices.length; i += 5) {
             vertices[i] = vertices[i] + speed;
         }
     }
