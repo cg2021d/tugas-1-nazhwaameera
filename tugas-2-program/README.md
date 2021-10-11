@@ -1,14 +1,13 @@
-#Tugas 1  
+# Tugas 1  
   
-#Tugas 2  
-##### Ambient Light  
+# Tugas 2  
+#### Ambient Light  
   
-##### Hemisphere Light  
+#### Hemisphere Light  
   
-##### Directional Light  
+#### Directional Light  
   
-##### Point Light  
+#### Point Light  
   
-##### Spot Light  
-  
+#### Spot Light  
   
