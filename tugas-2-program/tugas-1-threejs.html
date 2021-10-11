@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <script src="js/three.min.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+    
+    <script>
+        let container, camera, scene, renderer, geometry, earthBase, moonBase, earth, moon;
+
+        function init() {
+
+        container = document.createElement('div');
+        document.body.appendChild(container);
+       
+        camera = new THREE.PerspectiveCamera(
+            60, window.innerWidth / window.innerHeight, 1, 10000);
+        camera.position.z = 500;
+
+        scene = new THREE.Scene();
+
+        const loader = new THREE.TextureLoader();
+        const material1 = new THREE.MeshPhongMaterial({map: loader.load('images/Earth.jpg')});
+        const material2 = new THREE.MeshPhongMaterial({map: loader.load('images/Moon.jpg')});
+        let geometry = new THREE.SphereGeometry(1);
+       
+        const color = 0xFFFFFF;
+        const intensity = 1;
+        const light = new THREE.PointLight(color, intensity);
+        light.position.set(800, 800, 800);
+        scene.add(light);
+
+        const helper = new THREE.PointLightHelper(light);
+        scene.add(helper);
+        
+        earthBase = new THREE.Object3D();
+        moonBase = new THREE.Object3D();
+        earth = new THREE.Mesh(geometry, material1);
+        moon = new THREE.Mesh(geometry, material2);
+
+        earthBase.add(earth);
+        earthBase.add(moonBase);
+        moonBase.add(moon);
+
+        earth.scale.x = 150;
+        earth.scale.y = 150;
+        earth.scale.z = 150;
+        
+        moon.scale.x = 30;
+        moon.scale.y = 30;
+        moon.scale.z = 30;
+            
+        moon.position.z = 250; // moon orbit radius    
+
+        scene.add(earthBase);
+
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        document.body.appendChild(renderer.domElement);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            render();
+        }
+
+        function render() {
+        var currentSeconds = Date.now();
+        
+        // rotate earth
+        earth.rotation.y = currentSeconds * 0.001;
+            
+        // orbit moon
+        moonBase.rotation.y = currentSeconds * 0.001;
+            
+        // rotate moon
+        moon.rotation.y = currentSeconds * -0.005;
+            
+        renderer.render(scene, camera);
+        }
+
+        
+        init();
+        animate();
+
+    </script>

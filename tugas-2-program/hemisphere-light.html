@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <script src="js/three.min.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+
+<script>    
+        let scene, camera, renderer, icosahedron, plane, light;
+
+        let createIcosahedron = function() {
+                const geometry = new THREE.IcosahedronGeometry(3);
+                const material = new THREE.MeshPhongMaterial({color: "violet", emissive: 0x2b70, shininess: 50.0});
+                icosahedron = new THREE.Mesh( geometry, material );
+                icosahedron.receiveShadow = true;
+                icosahedron.castShadow = true;
+                scene.add( icosahedron );
+        };
+
+        let createPlane = function() {
+                const geometry = new THREE.PlaneGeometry(1000, 1000, 500, 500);
+                const material = new THREE.MeshLambertMaterial( {color: "white"} );
+                plane = new THREE.Mesh( geometry, material );
+                plane.receiveShadow = true;
+                plane.rotation.x = -Math.PI/2;
+                scene.add( plane );
+        };
+   
+        // set up the environment - 
+        // initiallize scene, camera, objects and renderer
+        let init = function() {
+            // 1. create the scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x444444);
+            
+            // 2. create an locate the camera       
+            camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 
+                        1, 1000);
+            camera.position.z = 10;
+            
+            // 3. create an locate the object on the scene           
+            createIcosahedron();
+
+            createPlane();
+            plane.position.set(0, -50, 0);
+
+            const skyColor = 0xB1E1FF;  // light blue
+            const groundColor = "violet";  // brownish orange
+            const intensity = 1;
+            const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
+            scene.add(light);
+
+            // 4. create the renderer     
+            renderer = new THREE.WebGLRenderer();   
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.BasicShadowMap;
+            
+            document.body.appendChild(renderer.domElement);
+          
+        };
+      
+        
+        // main animation loop - calls 50-60 in a second.
+        let mainLoop = function() {
+            icosahedron.rotation.x += 0.01;
+            icosahedron.rotation.y += 0.01;
+            icosahedron.rotation.z += 0.01;
+
+            renderer.render(scene, camera);
+            requestAnimationFrame(mainLoop);
+        };
+
+        init();
+        mainLoop();
+    </script>
