@@ -50,7 +50,7 @@
 
             const color = 0xFFFFFF;
             const intensity = 1;
-            const light = new THREE.PointLight(color, intensity);
+            const light = new THREE.PointLight(color, intensity, distance = 500, decay = 2);
             light.position.set(5, 5, 5);
             light.castShadow = true;
             scene.add(light);
